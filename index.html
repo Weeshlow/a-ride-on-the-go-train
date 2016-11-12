@@ -12,6 +12,14 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <link rel="import" href="templates/intro.html">
+    <link rel="import" href="templates/standard-library.html">
+    <link rel="import" href="templates/concurrency.html">
+    <link rel="import" href="templates/performance.html">
+    <link rel="import" href="templates/tooling.html">
+    <link rel="import" href="templates/deployment.html">
+    <link rel="import" href="templates/pain-points.html">
+
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -23,7 +31,7 @@
 	</head>
 	<body>
 		<div class="reveal">
-			<div class="slides">
+			<div id="slides" class="slides">
 				<section>
           <h1>A Ride on the Go Train</h1>
           <div class="two-panel">
@@ -49,121 +57,20 @@
             <li>Pain Points</li>
           </ul>
         </section>
-
-        <!-- Intro -->
-        <section>
-          <section>
-            <h1>Intro</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Intro -->
-
-        <!-- Standard Library -->
-        <section>
-          <section>
-            <h1>Standard Library</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Standard Library -->
-
-        <!-- Concurrency -->
-        <section>
-          <section>
-            <h1>Concurrency</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Concurrency -->
-
-        <!-- Performance -->
-        <section>
-          <section>
-            <h1>Performance</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Performance -->
-
-        <!-- Tooling -->
-        <section>
-          <section>
-            <h1>Tooling</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Tooling -->
-
-        <!-- Deployemnt -->
-        <section>
-          <section>
-            <h1>Deployemnt</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Deployment -->
-
-        <!-- Pain Points -->
-        <section>
-          <section>
-            <h1>Pain Points</h1>
-          </section>
-
-          <section>
-            <p>Slide</p>
-
-            <aside class="notes">
-              <p>Notes</p>
-            </aside>
-          </section>
-        </section>
-        <!-- /Pain Points -->
-
 			</div>
 		</div>
+
+    <script>
+      // Load the slides
+      var links = document.querySelectorAll('link[rel="import"]');
+
+      Array.prototype.forEach.call(links, function(link){
+        var template = link.import.querySelector('template');
+        var clone = document.importNode(template.content, true);
+
+        document.querySelector('#slides').appendChild(clone);
+      });
+    </script>
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
