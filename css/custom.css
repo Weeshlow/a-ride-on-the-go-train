@@ -1,8 +1,0 @@
-.two-panel {
-  display: flex;
-  flex-direction: row;
-}
-
-.two-panel > div {
-  flex: 1 1 auto;
-}
