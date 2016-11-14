@@ -5,11 +5,169 @@
     </section>
 
     <section>
-      <p>Slide</p>
+      <h3>Golang Concurrency Primitives</h3>
+      <ul>
+        <li>Goroutine</li>
+        <li>Channel</li>
+      </ul>
 
       <aside class="notes">
         <p>Notes</p>
       </aside>
+
     </section>
+
+    <section>
+        <h3>Goroutines</h3>
+        <ul>
+          <li>
+            Goroutines are a lightweight abstraction over threads.
+          </li>
+          <li>
+            Very lightweight in terms of memory, performance, and overhead.
+          </li>
+          <li>
+            The runtime is allocated a limited number of threads on which all the goroutines are multiplexed. At any point of time, each thread will be executing one goroutine. If that goroutine is blocked, then it will be swapped out for another goroutine that will execute on that thread instead.
+          </li>
+        </ul>
+    </section>
+
+    <section>
+      <h3>Goroutines</h3>
+      <ul>
+        <li>
+          Goroutines do not require much memory - only 2kB of stack space. They grow by allocating and freeing heap storage as required.
+        </li>
+        <li>
+          Low overhead as goroutines are created and destroyed by the runtime rather than the OS.
+        </li>
+        <li>
+          Fast context switches, only 3 registers need to be saved/restored - Program Counter, Stack Pointer and DX. The cost is much lower compared to OS threads.
+        </li>
+        <li>
+          Only runnable goroutines are considered during switch, blocked ones aren't. It is not a waste of resources if most goroutines are blocked.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Goroutines - Examples</h3>
+      <pre><code>
+        func DoSomething() {
+            fmt.Println("doing something")
+        }
+
+        func main() {
+            // blocking / sequential
+            DoSomething()
+
+            // non-blocking / asynchronous
+            go DoSomething()
+
+            // lots of goroutines
+            for i := 0; i < 10000; i++ {
+                go DoSomething()
+            }
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <h3>Goroutines - Examples</h3>
+      But what about communication?
+      <pre><code>
+        func DoSomething() float64 {
+            var result float64
+            // some blocking operation
+            // ...
+            return result
+        }
+
+        func main() {
+            // what happens to my return value? how do i get it?
+            go DoSomething()
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <h3>Channels</h3>
+      <ul>
+        <li>
+          Channels provide a way for two goroutines to communicate with one another
+        </li>
+      </ul>
+
+      <pre><code>
+        func DoSomething(c chan float64) {
+            result := 3.14159265
+            // write the result to the channel
+            c <- result
+        }
+
+        func main() {
+            // create a float64 channel
+            c := make(chan float64)
+
+            // pass channel to goroutine
+            go DoSomething(c)
+
+            // read the result from the channel
+            result := <-c
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <h3>Types of Channels</h3>
+      <ul>
+        <li>
+          Read only channels
+          <pre><code><-chan float64</code></pre>
+        </li>
+        <li>
+          Write only channels
+          <pre><code>chan<- float64</code></pre>
+        </li>
+        <li>
+          Bidirectional channels
+          <pre><code>chan float64</code></pre>
+        </li>
+        <li>
+          Unbuffered channels
+          <pre><code>make(chan float64)</code></pre>
+        </li>
+        <li>
+          Buffered channels
+          <pre><code>make(chan float64, 4)</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Channels and Blocking</h3>
+      Channels pass data sequentially and block on both reads and writes.
+      <pre><code>
+        func PrintVal(c chan float64) {
+            // block until a value can be read through the channel
+            fmt.Println(<-c)
+        }
+
+        func main() {
+            // create a float64 channel
+            c := make(chan float64)
+            // dispatch 10 goroutines
+            for i := 0; i < 10; i++ {
+              go PrintVal()
+            }
+            for i := 0; i < 10; i++ {
+              // blocks until values can be read
+              // values are read sequentially
+              c <- i
+            }
+        }
+      </code></pre>
+    </section>
+
   </section>
 </template>
