@@ -52,7 +52,7 @@
 
     <section>
       <h3>Goroutines - Examples</h3>
-      <pre><code>
+      <pre><code class="go">
         func DoSomething() {
             fmt.Println("doing something")
         }
@@ -75,7 +75,7 @@
     <section>
       <h3>Goroutines - Examples</h3>
       But what about communication?
-      <pre><code>
+      <pre><code class="go">
         func DoSomething() float64 {
             var result float64
             // some blocking operation
@@ -98,7 +98,7 @@
         </li>
       </ul>
 
-      <pre><code>
+      <pre><code class="go">
         func DoSomething(c chan float64) {
             result := 3.14159265
             // write the result to the channel
@@ -123,23 +123,23 @@
       <ul>
         <li>
           Read only channels
-          <pre><code><-chan float64</code></pre>
+          <pre><code class="go"><-chan float64</code></pre>
         </li>
         <li>
           Write only channels
-          <pre><code>chan<- float64</code></pre>
+          <pre><code class="go">chan<- float64</code></pre>
         </li>
         <li>
           Bidirectional channels
-          <pre><code>chan float64</code></pre>
+          <pre><code class="go">chan float64</code></pre>
         </li>
         <li>
           Unbuffered channels
-          <pre><code>make(chan float64)</code></pre>
+          <pre><code class="go">make(chan float64)</code></pre>
         </li>
         <li>
           Buffered channels
-          <pre><code>make(chan float64, 4)</code></pre>
+          <pre><code class="go">make(chan float64, 4)</code></pre>
         </li>
       </ul>
     </section>
@@ -147,7 +147,7 @@
     <section>
       <h3>Channels and Blocking</h3>
       Channels pass data sequentially and block on both reads and writes.
-      <pre><code>
+      <pre><code class="go">
         func PrintVal(c chan float64) {
             // block until a value can be read through the channel
             fmt.Println(<-c)
