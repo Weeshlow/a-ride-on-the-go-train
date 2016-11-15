@@ -5,11 +5,67 @@
     </section>
 
     <section>
-      <p>Slide</p>
-
-      <aside class="notes">
-        <p>Notes</p>
-      </aside>
+      <h3>go vet</h3>
+        <ul>
+          <li>
+            Reports suspicious constructs or other problems that are not caught by the compiler.
+          </li>
+          <li>
+            Uses heuristics therefore not all reports are genuine problems
+          </li>
+          <li>
+            While reports may not be geniune problems, code can usually be easily changed to remove the error.
+          </li>
+        </ul>
     </section>
+
+    <section>
+      <h3>go vet - Examples</h3>
+        <ul>
+          <li>
+            Ensures locks are not passed by value
+          </li>
+        </ul>
+        <pre><code class="go">
+          var (
+              val = 0
+          )
+
+          func IncVal(mu sync.Mutex) {
+              mu.Lock()
+              val++
+              mu.Unlock()
+          }
+
+          func main() {
+              mu := sync.Mutex{}
+              for i := 0; i < 256; i++ {
+                IncVal(mu)
+              }
+              fmt.Println(val)
+          }
+        </code></pre>
+    </section>
+
+    <section>
+      <h3>go lint</h3>
+    </section>
+
+    <section>
+      <h3>gofmt</h3>
+    </section>
+
+    <section>
+      <h3>go get</h3>
+    </section>
+
+    <section>
+      <h3>glide / vendoring</h3>
+    </section>
+
+    <section>
+      <h3>delve / debugging</h3>
+    </section>
+
   </section>
 </template>
