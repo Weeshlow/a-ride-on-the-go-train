@@ -9,6 +9,7 @@
       <ul>
         <li>Goroutine</li>
         <li>Channel</li>
+        <li>WaitGroup</li>
       </ul>
 
       <aside class="notes">
@@ -70,11 +71,12 @@
             }
         }
       </code></pre>
+      <p class="fragment fade-in">But what about communication?</p>
     </section>
 
     <section>
       <h3>Goroutines - Examples</h3>
-      But what about communication?
+      How do we share data?
       <pre><code class="go">
         func DoSomething() float64 {
             var result float64
@@ -116,6 +118,32 @@
             result := <-c
         }
       </code></pre>
+      <p class="fragment fade-in">How does everything stay synchronized?</p>
+    </section>
+
+    <section>
+      <h3>Channels and Blocking</h3>
+      Channels pass data sequentially and block on both reads and writes.
+      <pre><code class="go">
+        func PrintVal(c chan float64) {
+            // block until a value can be read through the channel
+            fmt.Println(<-c)
+        }
+
+        func main() {
+            // create a float64 channel
+            c := make(chan float64)
+            // dispatch 10 goroutines
+            for i := 0; i < 10; i++ {
+              go PrintVal()
+            }
+            for i := 0; i < 10; i++ {
+              // blocks until values can be read
+              // values are read sequentially
+              c <- i
+            }
+        }
+      </code></pre>
     </section>
 
     <section>
@@ -145,28 +173,82 @@
     </section>
 
     <section>
-      <h3>Channels and Blocking</h3>
-      Channels pass data sequentially and block on both reads and writes.
+      <h3>Buffered Channels</h3>
+      <ul>
+        <li>
+          Buffered channels act in a similar way to a semaphore.
+        </li>
+      </ul>
+
       <pre><code class="go">
-        func PrintVal(c chan float64) {
-            // block until a value can be read through the channel
-            fmt.Println(<-c)
+        func EatAtRestaurant(c chan bool) {
+            time.Sleep(time.Duration(rand.Float32() * 5) * time.Second)
+            fmt.Println("mmmMMMmmmm delicious")
+            <-capacity
         }
 
         func main() {
-            // create a float64 channel
-            c := make(chan float64)
-            // dispatch 10 goroutines
-            for i := 0; i < 10; i++ {
-              go PrintVal()
-            }
-            for i := 0; i < 10; i++ {
-              // blocks until values can be read
-              // values are read sequentially
-              c <- i
+            capacity := make(chan bool, 100)
+            for i := 0; i < 500; i++ {
+              capacity <- true
+              go EatAtRestaurant(capacity)
             }
         }
       </code></pre>
+      <p class="fragment fade-in">But how do we know when everything is done?</p>
+    </section>
+
+    <section>
+      <h3>WaitGroup</h3>
+      <ul>
+        <li>
+          Used to wait for a collection of asynchronous tasks to complete.
+        </li>
+        <li>
+          Increment the WaitGroup when a task starts, decrement when it finishes.
+        </li>
+        <li>
+          Block on `Wait()` until all tasks complete.
+        </li>
+      </ul>
+      <pre><code class="go">
+        func main() {
+            wg := sync.WaitGroup{}      // create the waitgroup
+            for i := 0; i < 256; i++ {
+              wg.Add(1)                 // increment waitgroup
+              go func() { wg.Done() }() // decrement waitgroup
+            }
+            wg.Wait() // block until goroutine finishes
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <h3>WaitGroup - Examples</h3>
+
+      <pre><code class="go">
+        results := make([]float32, 256)
+
+        func GenerateNumber(index int, wg *sync.WaitGroup) {
+            time.Duration(rand.Float32() * 5) * time.Second)
+            // add the result
+            results[index] = rand.Float32()
+            // decrement waitgroup
+            wg.Done()
+        }
+
+        func main() {
+            wg := sync.WaitGroup{}
+            for i := 0; i < 256; i++ {
+              // increment waitgroup
+              wg.Add(1)
+              go GenerateNumber(i, wg)
+            }
+            // wait until finished
+            wg.Wait()
+        }
+      </code></pre>
+
     </section>
 
   </section>
