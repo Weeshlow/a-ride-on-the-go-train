@@ -5,6 +5,32 @@
     </section>
 
     <section>
+      <h3>gofmt</h3>
+      <p>Auto-formats the code for you</p>
+      <ul>
+        <li class="fragment fade-in">
+          No configuration.
+        </li>
+        <li class="fragment fade-in">
+          No preferences.
+        </li>
+        <li class="fragment fade-in">
+          No bikeshedding.
+        </li>
+        <li class="fragment fade-in">
+          gofmt is law.
+        </li>
+        <p class="fragment fade-in">How should you feel about this?</p>
+      </lu>
+    </section>
+
+    <section>
+      <h3>gofmt</h3>
+      <img style="width:40%" src="img/gofmt.gif">
+      <p>Like this</p>
+    </section>
+
+    <section>
       <h3>go vet</h3>
         <ul>
           <li>
@@ -20,43 +46,15 @@
     </section>
 
     <section>
-      <h3>go vet - Examples</h3>
-        <ul>
-          <li>
-            Ensures locks are not passed by value
-          </li>
-        </ul>
-        <pre><code class="go">
-          var (
-              val = 0
-          )
-
-          func IncVal(mu sync.Mutex) {
-              mu.Lock()
-              val++
-              mu.Unlock()
-          }
-
-          func main() {
-              mu := sync.Mutex{}
-              for i := 0; i < 256; i++ {
-                IncVal(mu)
-              }
-              fmt.Println(val)
-          }
-        </code></pre>
-    </section>
-
-    <section>
       <h3>go lint</h3>
     </section>
 
     <section>
-      <h3>gofmt</h3>
-    </section>
-
-    <section>
       <h3>go get</h3>
+      <p>The original way of downloading a dependency</p>
+      <pre><code class="bash">
+          go get github.com/someUser/someAwesomeGoLib
+      </code></pre>
     </section>
 
     <section>
