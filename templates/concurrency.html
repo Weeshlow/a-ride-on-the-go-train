@@ -22,13 +22,18 @@
         <h3>Goroutines</h3>
         <ul>
           <li>
-            Goroutines are a lightweight abstraction over threads.
+            A lightweight abstraction over threads.
           </li>
           <li>
-            Very lightweight in terms of memory, performance, and overhead.
+            Very lightweight in terms of memory and overhead.
           </li>
           <li>
-            The runtime is allocated a limited number of threads on which all the goroutines are multiplexed. At any point of time, each thread will be executing one goroutine. If that goroutine is blocked, then it will be swapped out for another goroutine that will execute on that thread instead.
+            The runtime is allocated a limited number of threads on which all the goroutines are multiplexed.
+          <li>
+            At any point of time, each thread will be executing one goroutine.
+          </li>
+          <li>
+            If a goroutine is blocked, then it will be swapped out for another goroutine that will execute on that thread.
           </li>
         </ul>
     </section>
@@ -248,7 +253,38 @@
             wg.Wait()
         }
       </code></pre>
+    </section>
 
+    <!--
+    <section>
+      <h3>Atomic Operations</h3>
+      <ul>
+        <li>
+          Standard package to provide low-level atomic memory primitives.
+        </li>
+        <li>
+          Functions include atomic add, load, swap, and compare and swap.
+        </li>
+        <li>
+          Except for special, low-level applications, synchronization is better done with channels or the facilities of the sync package
+        </li>
+      </ul>
+      <pre><code class="go">
+        var count uint64 = 0
+        for i := 0; i < 100000; i++ {
+            go func() {
+                atomic.AddUint64(&count, 1)
+            }()
+        }
+        time.Sleep(time.Second)
+        fmt.Printf("reached %d in 1 second", atomic.LoadUint64(&count))
+      </code></pre>
+    </section>
+    -->
+
+    <section>
+      <h3>Concurrency</h3>
+      "Share memory by communicating; don't communicate by sharing memory."
     </section>
 
   </section>
