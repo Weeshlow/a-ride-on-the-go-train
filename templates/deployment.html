@@ -5,11 +5,24 @@
     </section>
 
     <section>
-      <p>Slide</p>
-
+      <pre><code data-trim data-noescape>
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./bin/main .
+      </code></pre>
       <aside class="notes">
         <p>Notes</p>
       </aside>
+    </section>
+
+    <section>
+      <pre><code data-trim data-noescape>
+FROM scratch
+
+ADD ./bin/main /
+
+ENTRYPOINT ["/main"]
+
+EXPOSE 8000
+      </code></pre>
     </section>
   </section>
 </template>
