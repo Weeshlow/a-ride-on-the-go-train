@@ -1,11 +1,42 @@
 <template>
   <section>
     <section>
-      <h1>Pain Points</h1>
+      <h1>Criticisms</h1>
     </section>
 
     <section>
       <h3>"Golang: 100% Perfect, 90% of the time."</h3>
+    </section>
+
+    <section>
+      <h3>Complaints</h3>
+      <img style="width:100%" src="img/complaint-cloud.png">
+      https://github.com/ksimka/go-is-not-good
+    </section>
+
+    <section>
+      <h3>Valid Complaints (IMHO)</h3>
+      <div class="left">
+        <ul>
+          <li>GOPATH is a mess</li>
+          <li>Lack of basic data structures</li>
+          <li>Nil interfaces are not entirely nil</li>
+          <li>Hard to extend</li>
+          <li>No generics</li>
+          <li>No overloading</li>
+          <li>No decent IDE</li>
+        </ul>
+      </div>
+      <div class="right">
+        <ul>
+          <li>No user-type iteration</li>
+          <li>Not-so-obvious slices behaviour</li>
+          <li>Awkward std math lib</li>
+          <li>Project layout is bad</li>
+          <li>Slow json parsing</li>
+          <li>Unwieldy to code new collections</li>
+        </ul>
+      </div>
     </section>
 
     <section>
@@ -17,7 +48,7 @@
     </section>
 
     <section>
-      <h3>No Generics - cont</h3>
+      <h3>No Generics</h3>
       <ul>
         <li>While interfaces provide similar functionality, you are losing both syntactic sugar, speed, and compile-time safety</li>
       </ul>
@@ -39,41 +70,65 @@
     </section>
 
     <section>
-      <h3>No Generics - cont</h3>
+      <h3>No Overloading</h3>
       <ul>
-        <li>Using interfaces aren't the end of the world, but it can get tedious</li>
+        <li>Golang does not support overloading</li>
+        <li>Math package has only a float64 API</li>
+        <li>Compounded with the strict static typing, can make numerical code <b>painful</b></li>
       </ul>
-      <p>Sorting a slice of structs:</p>
       <pre><code class="go">
-        type MyStruct {
-            Attr int
-        }
-
-        type MyStructSortable []MyStruct
-
-        func (s MyStructSortable) Len() int {
-            return len(s)
-        }
-        func (s MyStructSortable) Swap(i, j int) {
-            s[i], s[j] = s[j], s[i]
-        }
-        func (s MyStructSortable) Less(i, j int) bool {
-            return s[i].Attr < s[j].Attr
+        func myFunc(val int64) {
+            rounded := math.Round(10.345345) // returns float64
+            return int64(10) + val + int64(rounded)
         }
       </code></pre>
     </section>
 
     <section>
-      <h3>No Overloading</h3>
+      <h3>Interfaces and Attributes</h3>
       <ul>
-        <li>Golang does not support overloading</li>
-        <li>Compounded with the strict static typing, can make numerical code<b>painful</b></li>
-      </ul>
+        <li>Golang interfaces only support methods</li>
+        <li>Tedius Setter / Getter methods that could be fixed with attributes</li>
+      <ul>
       <pre><code class="go">
-        // all "math" package methods use float64
-        func myFunc(val int64) {
-            rounded := math.Round(10.345345) // returns float64
-            return int64(10) + val + int64(rounded)
+        type Shape interface{
+            Area() float64
+            Circumference() float64
+            SetPoints([]Vec2)
+            GetPoints() []Vec2
+        }
+
+        type Shape interface{
+            Area() float64
+            Circumference() float64
+            Points []Vec2
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <h3>Typed Interfaces Are Never Nil</h3>
+      <ul>
+        <li>Interface internally has two fields: type, value. Interface is equal to nil, only if both of these fields are nil.</li>
+      <ul>
+      <pre><code class="go">
+        func IsNil(arg interface{}) {
+            if arg == nil {
+                fmt.Println("is nil")
+            } else {
+                fmt.Println("is not nil")
+            }
+        }
+
+        func main() {
+            var flt *float64
+            var str *string
+            var i interface{}
+
+            IsNil(flt)    // is not nil
+            IsNil(str)    // is not nil
+            IsNil(i)      // is nil
+            IsNil(nil)    // is nil
         }
       </code></pre>
     </section>
@@ -104,7 +159,7 @@
     </section>
 
     <section>
-      <h3>Error Checking - cont</h3>
+      <h3>Error Checking</h3>
       <ul>
         <li>Checking error by type, not too bad if package exports the error type</li>
       </ul>
@@ -119,7 +174,7 @@
                         fmt.Println("Do that")
                     case lib.ErrWhatever:
                         fmt.Println("Do whatever")
-                    default"
+                    default:
                         fmt.Println("Who cares")
                 }
                 return err
