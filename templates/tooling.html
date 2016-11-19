@@ -34,32 +34,160 @@
             Reports suspicious constructs or other problems that are not caught by the compiler.
           </li>
           <li>
-            Uses heuristics therefore not all reports are genuine problems
-          </li>
-          <li>
-            While reports may not be geniune problems, code can usually be easily changed to remove the error.
+            While reports may not be always result in geniune problems, code can usually be easily written in less ambiguous or dangerous way to remove the warning.
           </li>
         </ul>
     </section>
 
     <section>
-      <h3>go lint</h3>
+      <h3>go vet - Examples</h3>
+        <ul>
+          <li>
+            Check for useless assignments.
+          </li>
+          <li>
+            Mistakes involving boolean operators.
+          </li>
+          <li>
+            Locks that are erroneously passed by value.
+          </li>
+          <li>
+            Incorrect uses of range loop variables in closures.
+          </li>
+          <li>
+            Bit shifts equal to or longer than the variable's length.
+          </li>
+          <li>
+            Unreachable code.
+          </li>
+        </ul>
+    </section>
+
+    <section>
+      <h3>go vet - Examples</h3>
+      <pre><code class="bash">
+        main.go:18: bar passes Lock by value: sync.Mutex
+        main.go:52: unreachable code
+        main.go:21: arg 1 for printf verb %s of wrong type: int
+        main.go:22: possible formatting directive in Sprint call
+        main.go:25: self-assignment of a to a
+        main.go:29: comparison of function foo != nil is always true
+        main.go:33: possible misuse of unsafe.Pointer
+        main.go:37: range variable x captured by func literal
+        main.go:42: direct assignment to atomic value
+        main.go:45: suspect and: c == false && c == true
+        main.go:48: redundant or: c || c
+      </code></pre>
+      <p>https://dominik.honnef.co/posts/2014/12/go-tools/#gofmt</p>
+    </section>
+
+    <section>
+      <h3>golint </h3>
+      <ul>
+        <li>
+            Golint differs from gofmt.
+        </li>
+        <li>
+          Gofmt reformats Go source code, whereas golint prints out style mistakes.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>golint - Examples</h3>
+      <pre><code class="bash" style="font-size:16px; line-height:18px;">
+        main.go:8:5: exported var Bar should have comment or be unexported
+        main.go:11:6: exported type Foo should have comment or be unexported
+        main.go:15:1: exported method Foo.A should have comment or be unexported
+        main.go:18:1: exported method Foo.B should have comment or be unexported
+        main.go:8:5: error var FooError should have name of the form ErrFoo
+      </code></pre>
+      <p>https://dominik.honnef.co/posts/2014/12/go-tools/#golint</p>
     </section>
 
     <section>
       <h3>go get</h3>
       <p>The original way of downloading a dependency</p>
+      <ul>
+        <li>
+          Quick and easy
+        </li>
+      </ul>
       <pre><code class="bash">
           go get github.com/someUser/someAwesomeGoLib
       </code></pre>
+      <p class="fragment fade-in">But what about versioning conflicts?</p>
     </section>
 
     <section>
-      <h3>glide / vendoring</h3>
+      <h3>vendoring</h3>
+      <ul>
+        <li>
+          Golang 1.6+ supports vendoring dependencies inside of a repo in the <code>vendor</code> directory.
+        </li>
+        <li>
+          When building, the compiler will prioritize using a dependency found in the vendor folder.
+        </li>
+        <li>
+          If no folder is found in the vendor folder, it will use the <code>$GOPATH</code>.
+        </li>
+        <li>
+          The is current no defacto vendoring tool.
+        </li>
+        <li>
+          There have been developer surveys on existing vendoring tools, one should be standardized soon.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>glide</h3>
+      <ul>
+        <li>
+          glide is a golang vendor package management tool.
+        </li>
+        <li>
+          glide is the vendor package management tool we've been using.
+        </li>
+        <li>
+          glide uses a similar approach to <b>cargo</b> and <b>yarn</b> allowing for deterministic and reproducable builds.
+        </li>
+        <li>
+          Top level dependencies are defined in the <code>glide.yaml</code> file.
+        </li>
+        <li>
+          Transitive dependencies are automatically generated and locked in the <code>glide.lock</code> file.
+        </li>
+        <pre><code class="bash">
+            go get github.com/Masterminds/glide
+            cd ~/workspace/go/src/unchartedsoftware/package
+            glide init
+            glide install
+        </code></pre>
+      </ul>
     </section>
 
     <section>
       <h3>delve / debugging</h3>
+      <img style="width:50%; background-color:#fff;" src="img/delve.png">
+      <ul>
+        <li>
+          Delve provides a CLI for debugging.
+        </li>
+        <li>
+          Delve decomposed into an HTTP client/server model for both remote debugging and to allow IDE integration.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>delve - Atom Plugin</h3>
+      <img style="width:50%" src="img/atom-delve.gif">
+      <ul>
+        <li>
+          https://github.com/lloiser/go-debug
+        </li>
+      </ul>
     </section>
 
   </section>
