@@ -165,7 +165,7 @@
             a := make(chan bool)
             b := make(chan bool)
             c := make(chan bool)
-            go ReadChannels(a, b, stop)
+            go ReadChannels(a, b, c)
             for {
                 r := rand.Float64()
                 if r < 0.333 {
