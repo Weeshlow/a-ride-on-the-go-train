@@ -22,10 +22,7 @@
         <h3>Goroutines</h3>
         <ul>
           <li>
-            A lightweight abstraction over threads.
-          </li>
-          <li>
-            Very lightweight in terms of memory and overhead.
+            A lightweight abstraction over OS threads.
           </li>
           <li>
             The runtime is allocated a limited number of threads on which all the goroutines are multiplexed.
@@ -33,7 +30,7 @@
             At any point of time, each thread will be executing one goroutine.
           </li>
           <li>
-            If a goroutine is blocked, then it will be swapped out for another goroutine that will execute on that thread.
+            When a goroutine is blocked, it is swapped out for another goroutine that will execute on that thread.
           </li>
         </ul>
     </section>
@@ -146,6 +143,39 @@
               // blocks until values can be read
               // values are read sequentially
               c <- i
+            }
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <h3>Reading from Multiple channels</h3>
+      <pre><code class="go" style="font-size:18px; line-height:20px;">
+        func ReadChannels(a, b, c chan bool) {
+            for {
+                select {
+                case <-a: fmt.Println("received a")
+                case <-b: fmt.Println("received b")
+                case <-c: return
+                }
+            }
+        }
+
+        func main() {
+            a := make(chan bool)
+            b := make(chan bool)
+            c := make(chan bool)
+            go ReadChannels(a, b, stop)
+            for {
+                r := rand.Float64()
+                if r < 0.333 {
+                    a<-true
+                } else if r >= 0.333 && r < 0.666 {
+                    b<-true
+                } else {
+                    c<-true
+                    break
+                }
             }
         }
       </code></pre>
@@ -284,7 +314,8 @@
 
     <section>
       <h3>Concurrency</h3>
-      "Share memory by communicating; don't communicate by sharing memory."
+      <p>"Share memory by communicating;</p>
+      <p>don't communicate by sharing memory."</p>
     </section>
 
   </section>

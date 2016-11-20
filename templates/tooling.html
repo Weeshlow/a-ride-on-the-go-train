@@ -17,7 +17,7 @@
         <li class="fragment fade-in">
           gofmt is law.
         </li>
-      </lu>
+      </ul>
       <p class="fragment fade-in">How should you feel about this?</p>
     </section>
 
@@ -34,32 +34,122 @@
             Reports suspicious constructs or other problems that are not caught by the compiler.
           </li>
           <li>
-            Uses heuristics therefore not all reports are genuine problems
-          </li>
-          <li>
-            While reports may not be geniune problems, code can usually be easily changed to remove the error.
+            While reports may not be always result in geniune problems, code can usually be easily written in less ambiguous or dangerous way to remove the warning.
           </li>
         </ul>
     </section>
 
     <section>
-      <h3>go lint</h3>
+      <h3>go vet - Examples</h3>
+        <ul>
+          <li>
+            Check for useless assignments.
+          </li>
+          <li>
+            Mistakes involving boolean operators.
+          </li>
+          <li>
+            Locks that are erroneously passed by value.
+          </li>
+          <li>
+            Incorrect uses of range loop variables in closures.
+          </li>
+          <li>
+            Bit shifts equal to or longer than the variable's length.
+          </li>
+          <li>
+            Unreachable code.
+          </li>
+        </ul>
+    </section>
+
+    <section>
+      <h3>golint </h3>
+      <ul>
+        <li>
+          <code>While go vet</code> is concerned with correctness, <code>golint</code> is concerned with coding style.
+        </li>
+        <li>
+          <code>While go fmt</code> reformats Go source code, <code>golint</code> prints out higher level style or documentation mistakes.
+        </li>
+      </ul>
     </section>
 
     <section>
       <h3>go get</h3>
-      <p>The original way of downloading a dependency</p>
+      <p>Downloading a dependency</p>
       <pre><code class="bash">
           go get github.com/someUser/someAwesomeGoLib
       </code></pre>
+      <p class="fragment fade-in">But what about versioning conflicts?</p>
     </section>
 
     <section>
-      <h3>glide / vendoring</h3>
+      <h3>vendoring</h3>
+      <ul>
+        <li>
+          Golang 1.6+ supports vendoring dependencies inside of a repo in the <code>vendor</code> directory.
+        </li>
+        <li>
+          When building, the compiler will prioritize using a dependency found in the vendor folder.
+        </li>
+        <li>
+          If no folder is found in the vendor folder, it will use the <code>$GOPATH</code>.
+        </li>
+        <li>
+          Currently there is no defacto vendoring tool.
+        </li>
+        <li>
+          There have been developer surveys on existing vendoring tools, one should be standardized soon.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>glide</h3>
+      <ul>
+        <li>
+          glide is the golang vendor package management tool we've been using.
+        </li>
+        <li>
+          glide uses a similar approach to <b>cargo</b> and <b>yarn</b> allowing for deterministic and reproducable builds.
+        </li>
+        <li>
+          Top level dependencies are defined in the <code>glide.yaml</code> file.
+        </li>
+        <li>
+          Transitive dependencies are automatically generated and locked in the <code>glide.lock</code> file.
+        </li>
+        <pre><code class="bash">
+            go get github.com/Masterminds/glide
+            cd ~/workspace/go/src/unchartedsoftware/package
+            glide init
+            glide install
+        </code></pre>
+      </ul>
     </section>
 
     <section>
       <h3>delve / debugging</h3>
+      <img style="width:50%; background-color:#fff;" src="img/delve.png">
+      <ul>
+        <li>
+          Delve provides a CLI for debugging.
+        </li>
+        <li>
+          Delve decomposed into an HTTP client/server model for both remote debugging and to allow IDE integration.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>delve - Atom Plugin</h3>
+      <img style="width:50%" src="img/atom-delve.gif">
+      <ul>
+        <li>
+          https://github.com/lloiser/go-debug
+        </li>
+      </ul>
     </section>
 
   </section>
