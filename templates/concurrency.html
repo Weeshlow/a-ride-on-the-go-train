@@ -217,7 +217,7 @@
 
       <pre><code class="go">
         func EatAtRestaurant(c chan bool) {
-            time.Sleep(time.Duration(rand.Float32() * 5) * time.Second)
+            time.Sleep(time.Second)
             fmt.Println("mmmMMMmmmm delicious")
             <-capacity
         }
@@ -265,7 +265,7 @@
         results := make([]float32, 256)
 
         func GenerateNumber(index int, wg *sync.WaitGroup) {
-            time.Duration(rand.Float32() * 5) * time.Second)
+            time.Duration(time.Second)
             // add the result
             results[index] = rand.Float32()
             // decrement waitgroup
