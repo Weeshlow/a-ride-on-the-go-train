@@ -56,11 +56,16 @@ $selectionBackgroundColor: $magenta;
 @import "../template/theme";
 // ---------------------------------------------
 
-.two-panel {
+.flex {
   display: flex;
   flex-direction: row;
 
   > div {
     flex: 1 1 auto;
+  }
+
+  &.creators {
+    margin: 0 auto;
+    width: 700px;
   }
 }
