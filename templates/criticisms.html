@@ -49,7 +49,7 @@
     <section>
       <h3>No Generics</h3>
       <ul>
-        <li>While interfaces provide similar functionality, you are losing both syntactic sugar, speed, and compile-time safety</li>
+        <li>While interfaces provide similar functionality, you are losing syntactic sugar, run-time performance, and compile-time safety</li>
       </ul>
       <p>Example "generic" go code:</p>
       <pre><code class="go">
@@ -158,28 +158,26 @@
     </section>
 
     <section>
-      <h3>Error Checking</h3>
+      <h3>Handling Specific Errors</h3>
       <ul>
-        <li>Checking error by type, not too bad if package exports the error type</li>
+        <li>If the package exports the error, you can check it by type.</li>
+        <li>If it doesn't, use a string comparison, which is brittle.</li>
       </ul>
       <pre><code class="go">
-        func DoSomething() error {
-            data, err := conn.Read()
-            if err != nil {
-                switch e := err.(type) {
-                    case lib.ErrThisType:
-                        fmt.Println("Do this")
-                    case lib.ErrThatType:
-                        fmt.Println("Do that")
-                    case lib.ErrWhatever:
-                        fmt.Println("Do whatever")
-                    default:
-                        fmt.Println("Who cares")
-                }
-                return err
+            switch e := err.(type) {
+                case lib.ErrThisType:
+                    fmt.Println("Do this")
+                case lib.ErrThatType:
+                    fmt.Println("Do that")
             }
-            return nil
-        }
+
+            // vs
+
+            if err.Error() == "this specific error string" {
+                fmt.Println("Do this")
+            } else if err.Error() == "this other error string" {
+                fmt.Printn("Do that")
+            }
       </code></pre>
     </section>
 
