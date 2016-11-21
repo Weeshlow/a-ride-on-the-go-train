@@ -46,8 +46,8 @@ $mainColor: $base2;
 $headingColor: $base3;
 $headingTextShadow: 3px;
 $backgroundColor: $base01;
-$linkColor: $cyan;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColor: lighten($cyan, 10%);
+$linkColorHover: lighten($linkColor, 10%);
 $selectionBackgroundColor: $magenta;
 
 
