@@ -75,4 +75,19 @@ $selectionBackgroundColor: $magenta;
     display: block;
     font-size: 50%;
   }
+
+  pre {
+    background: rgb(63, 63, 63);
+
+    code {
+      padding: 0 5px;
+
+      &:first-child {
+        padding-top: 5px;
+      }
+      &:last-child {
+        padding-bottom: 5px;
+      }
+    }
+  }
 }

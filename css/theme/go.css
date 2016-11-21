@@ -301,3 +301,12 @@ body {
 .reveal a.credit {
   display: block;
   font-size: 50%; }
+
+.reveal pre {
+  background: #3f3f3f; }
+  .reveal pre code {
+    padding: 0 5px; }
+    .reveal pre code:first-child {
+      padding-top: 5px; }
+    .reveal pre code:last-child {
+      padding-bottom: 5px; }
