@@ -11,15 +11,23 @@
     </section>
 
     <section>
-      <h2>Static Binary Images</h2>
-      <pre><code data-trim data-noescape>
-FROM scratch
+      <h2>Dockerfiles from scratch</h2>
+      <pre><code>
+        FROM scratch
 
-ADD ./bin/main /
+        ADD ./bin/main /
 
-ENTRYPOINT ["/main"]
+        ENTRYPOINT ["/main"]
 
-EXPOSE 8000
+        EXPOSE 4200
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Tiny Images</h2>
+      <pre><code>
+        REPOSITORY      TAG         CREATED            SIZE
+        echo            latest      2 minutes ago      5.647 MB
       </code></pre>
     </section>
   </section>
