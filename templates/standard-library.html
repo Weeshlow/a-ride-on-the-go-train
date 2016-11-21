@@ -11,8 +11,7 @@
 
     <section>
       <pre><code class="go">
-        import "encoding/json"
-
+        import "encoding/json"</code><code class="go fragment fade-in">
         type Geo struct {
           Lat float64 `json:"lat"`
           Lon float64 `json:"lon"`
@@ -22,13 +21,12 @@
           FullName string `json:"full_name"`
           Password string `json:"-"`
           Location *Geo    `json:"location,omitempty"`
-        }
-
-        u := User{123, "Party Parrot", "woot woot", nil}
+        }</code><code class="go fragment fade-in">
+        u := User{123, "Party Parrot", "woot woot", nil}</code><code class="go fragment fade-in">
         output, err := json.Marshal(u)
         if err != nil {
           // Handle the error and exit
-        }
+        }</code><code class="go fragment fade-in">
         fmt.Println(string(output))
         // {"id":123,"full_name":"Party Parrot"}
       </code></pre>
@@ -36,34 +34,58 @@
 
     <section>
       <h2>Go loves the Web</h2>
-      <img src="img/information-superhighway.png" alt="The Web loves Go">
+      <img src="img/information-superhighway.png" alt="Go loves the Web">
     </section>
 
     <section>
       <pre><code class="go">
-        package main
+      package main
 
-        import (
-          "fmt"
-          "io/ioutil"
-          "net/http"
-        )
+      import (
+        "fmt"
+        "io/ioutil"
+        "net/http"
+      )</code><code class="go fragment fade-in">
+      func echoHandler(w http.ResponseWriter, r *http.Request) {
+        body, err := ioutil.ReadAll(r.Body)
+        defer r.Body.Close()
+        if err != nil {
+          w.WriteHeader(http.StatusInternalServerError)
+          fmt.Fprint(w, "Uhoh!")
+          return
+        }
+        fmt.Fprint(w, string(body))
+      }</code><code class="go fragment fade-in">
+      func main() {
+        http.HandleFunc("/", echoHandler)
+        http.ListenAndServe(":4200", nil)
+      }
+      </code></pre>
+    </section>
 
-        func echoHandler(w http.ResponseWriter, r *http.Request) {
-          body, err := ioutil.ReadAll(r.Body)
-          defer r.Body.Close()
-          if err != nil {
-            w.WriteHeader(http.StatusInternalServerError)
-            fmt.Fprint(w, "Uhoh!")
-            return
+    <section>
+      <h2>Go loves Testing</h2>
+      <img src="img/lab-gopher.jpg" alt="Go loves Testing">
+    </section>
+
+    <section>
+      <pre><code class="go">
+      import "testing"</code><code class="go fragment fade-in">
+      func TestReverse(t *testing.T) {
+        cases := []struct {
+          in, want string
+        }{
+          {"Hello, world", "dlrow ,olleH"},
+          {"Hello, 世界", "界世 ,olleH"},
+          {"", ""},
+        }
+        for _, c := range cases {
+          got := Reverse(c.in)
+          if got != c.want {
+            t.Errorf("Reverse(%q) == %q, want %q", c.in, got, c.want)
           }
-          fmt.Fprint(w, string(body))
         }
-
-        func main() {
-          http.HandleFunc("/", echoHandler)
-          http.ListenAndServe(":4200", nil)
-        }
+      }
       </code></pre>
     </section>
   </section>
