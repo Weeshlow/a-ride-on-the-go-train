@@ -36,24 +36,6 @@
     </section>
 
     <section>
-      <h3>Goroutines</h3>
-      <ul>
-        <li>
-          Goroutines do not require much memory - only 2kB of stack space. They grow by allocating and freeing heap storage as required.
-        </li>
-        <li>
-          Low overhead as goroutines are created and destroyed by the runtime rather than the OS.
-        </li>
-        <li>
-          Fast context switches, only 3 registers need to be saved/restored - Program Counter, Stack Pointer and DX. The cost is much lower compared to OS threads.
-        </li>
-        <li>
-          Only runnable goroutines are considered during switch, blocked ones aren't. It is not a waste of resources if most goroutines are blocked.
-        </li>
-      </ul>
-    </section>
-
-    <section>
       <h3>Goroutines - Examples</h3>
       <pre><code class="go">
         func DoSomething() {
@@ -129,7 +111,8 @@
       <pre><code class="go">
         func PrintVal(c chan float64) {
             // block until a value can be read through the channel
-            fmt.Println(<-c)
+            val <- c
+            fmt.Println(val)
         }
 
         func main() {
@@ -234,7 +217,7 @@
     </section>
 
     <section>
-      <h3>WaitGroup</h3>
+      <h3>WaitGroups</h3>
       <ul>
         <li>
           Used to wait for a collection of asynchronous tasks to complete.
@@ -259,7 +242,7 @@
     </section>
 
     <section>
-      <h3>WaitGroup - Examples</h3>
+      <h3>WaitGroups</h3>
 
       <pre><code class="go">
         results := make([]float32, 256)

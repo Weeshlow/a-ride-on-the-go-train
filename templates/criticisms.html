@@ -9,7 +9,7 @@
     </section>
 
     <section>
-      <h3>Complaints</h3>
+      <h3>Lots of Criticism</h3>
       <img style="width:100%" src="img/complaint-cloud.png">
       https://github.com/ksimka/go-is-not-good
     </section>
@@ -49,7 +49,8 @@
     <section>
       <h3>No Generics</h3>
       <ul>
-        <li>While interfaces provide similar functionality, you are losing syntactic sugar, run-time performance, and compile-time safety</li>
+        <li>Interfaces provide similar functionality</li>
+        <li>Lack the syntactic sugar, run-time performance, and compile-time safety of generics</li>
       </ul>
       <p>Example "generic" go code:</p>
       <pre><code class="go">
@@ -71,8 +72,28 @@
     <section>
       <h3>No Overloading</h3>
       <ul>
-        <li>Golang does not support overloading</li>
-        <li>Math package has only a float64 API</li>
+        <li>Golang does not support overloading either</li>
+      </ul>
+      <img style="width:40%" src="img/overloading.jpg">
+    </section>
+
+    <section>
+      <h3>No Overloading</h3>
+      <ul>
+        <li>No generics + no overloading can result in:</li>
+        <ul>
+          <li>Bloated APIs</li>
+          <li>Awkward APIs</li>
+          <li>Lots of redundant code due to copy and pasting</li>
+          <li>Inefficient code due to reflection and type assertions</li>
+        </ul>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Standard Math Package</h3>
+      <ul>
+        <li>As golang lacks overloading and generics, the <code>math</code> package only deals with float64</li>
         <li>Compounded with the strict static typing, can make numerical code <b>painful</b></li>
       </ul>
       <pre><code class="go">

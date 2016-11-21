@@ -8,37 +8,53 @@
       <h3>go fmt</h3>
       <ul>
         <li>
-          `go fmt` is a tool that automatically formats Go source code. It accepts no configuration.
+          `go fmt` is a tool that automatically formats Go source code.
         </li>
         <li>
-          Never worry about minor formatting concerns while hacking away,
+          It does not accept any configuration.
         </li>
         <li>
-          Makes codebases easier to read, no need to mentally convert others' formatting style into something you can understand.
+          Codebases are easier to read as they all have a familiar formatting.
         </li>
         <li>
-          No style debates, just run `go fmt` and forget about it.
+          No style debates, no butchered whitespace in commits, just run `go fmt` and forget about it.
         </li>
       </ul>
+    </section>
+
+    <section>
+      <h3>go fmt</h3>
+      <p>At first I was all</p>
+      <img style="width:50%" src="img/gofmt-sad.jpg">
+    </section>
+
+    <section>
+      <h3>go fmt</h3>
+      <p>Then I was all</p>
+      <img style="width:40%" src="img/gofmt-happy.gif">
     </section>
 
     <section>
       <h3>go vet</h3>
         <ul>
           <li>
-            Reports suspicious constructs or other problems that are not caught by the compiler.
+            The compiler can only go so far.
           </li>
           <li>
-            While reports may not be always result in geniune problems, code can usually be easily written in less ambiguous or dangerous way to remove the warning.
+            Lots of code that compiles can and should be written in a better way.
+          </li>
+          <li>
+            <code>go vet</code> reports suspicious code or other problems in the code.
           </li>
         </ul>
+        <img style="width:50%" src="img/govet-badcode.jpg">
     </section>
 
     <section>
-      <h3>go vet - Examples</h3>
+      <h3>go vet</h3>
         <ul>
           <li>
-            Check for useless assignments.
+            Useless assignments, unreachable code.
           </li>
           <li>
             Mistakes involving boolean operators.
@@ -52,9 +68,6 @@
           <li>
             Bit shifts equal to or longer than the variable's length.
           </li>
-          <li>
-            Unreachable code.
-          </li>
         </ul>
     </section>
 
@@ -62,12 +75,19 @@
       <h3>golint </h3>
       <ul>
         <li>
-          <code>While go vet</code> is concerned with correctness, <code>golint</code> is concerned with coding style.
+          <code>golint</code> is concerned about coding style, naming conventions, and documentation format.
         </li>
         <li>
-          <code>While go fmt</code> reformats Go source code, <code>golint</code> prints out higher level style or documentation mistakes.
+          <code>golint</code> is very opinionated and strict.
         </li>
       </ul>
+      <img style="width:50%" src="img/golint-scold.jpg">
+    </section>
+
+    <section>
+      <h3>go fmt + go vet + golint</h3>
+      Code becomes so much easier to read, modify, and maintain.
+      <img style="width:50%" src="img/powers-combined.png">
     </section>
 
     <section>
@@ -83,13 +103,13 @@
       <h3>vendoring</h3>
       <ul>
         <li>
-          Golang 1.6+ supports vendoring dependencies inside of a repo in the <code>vendor</code> directory.
+          As of 1.6+ Golang supports vendoring dependencies inside of a repo.
         </li>
         <li>
-          When building, the compiler will prioritize using a dependency found in the vendor folder.
+          When building, the compiler will prioritize using a dependency found in the <code>vendor</code> directory.
         </li>
         <li>
-          If no folder is found in the vendor folder, it will use the <code>$GOPATH</code>.
+          If it is not found in the vendor directory, it will check the <code>$GOPATH</code>.
         </li>
         <li>
           Currently there is no defacto vendoring tool.
