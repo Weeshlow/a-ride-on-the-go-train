@@ -5,11 +5,34 @@
     </section>
 
     <section>
-      <p>Slide</p>
+      <h2>Working with JSON</h2>
+      <img src="img/jason-go.jpg" alt="Jason loves Go">
+    </section>
 
-      <aside class="notes">
-        <p>Notes</p>
-      </aside>
+    <section>
+      <pre><code class="go">
+        import "encoding/json"
+
+        type User struct {
+          ID       int    `json:"id"`
+          FullName string `json:"full_name"`
+          Location Geo    `json:"location,omitempty"`
+          Password string `json:"-"`
+        }
+
+        u := User{
+          ID: 123,
+          FullName: "Party Parrot",
+          Password: "woot woot",
+        }
+
+        output, err := json.Marshal(u)
+        if err != nil {
+          // Handle the error and exit
+        }
+        fmt.Println(string(output))
+        // {"id":123,"full_name":"Party Parrot"}
+      </code></pre>
     </section>
   </section>
 </template>
