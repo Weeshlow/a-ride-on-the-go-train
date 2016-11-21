@@ -15,6 +15,15 @@
       <pre><code>
   CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
       </pre></code>
+
+      <aside class="notes">
+        <ul>
+          <li>disable cgo</li>
+          <li>set the OS to Linux</li>
+          <li>rebuild all the packages</li>
+          <li>all the imports will be rebuilt with cgo disabled</li>
+        </ul>
+      </aside>
     </section>
 
     <section>
