@@ -11,7 +11,14 @@
     </section>
 
     <section>
-      <h2>Dockerfiles from scratch</h2>
+      <h2>Build a Static Binary</h2>
+      <pre><code>
+  CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+      </pre></code>
+    </section>
+
+    <section>
+      <h2>Dockerfiles from 'scratch'</h2>
       <pre><code>
         FROM scratch
 
@@ -26,12 +33,28 @@
     <section>
       <h2>Tiny Images</h2>
       <pre><code class="javascript">
-        $ docker images
-        REPOSITORY           TAG         CREATED            SIZE
-        go-echo-server       latest      2 minutes ago      5.647 MB
-        banana               latest      3 years ago        258.73 MB
+    $ docker images
+    REPOSITORY           TAG         CREATED            SIZE
+    go-echo-server       latest      2 minutes ago      5.647 MB
+    banana               latest      3 months ago       258.3 MB
       </code></pre>
       <p>* banana for scale</p>
+    </section>
+
+    <section>
+      <h2>Memory on startup</h2>
+      <pre><code class="javascript">
+    CPU %     MEM USAGE / LIMIT     MEM %     NET I/O
+    0.00%     675.8 kB / 2.1 GB     0.03%     648 B / 648 B
+      </pre></code>
+    </section>
+
+    <section>
+      <h2>Memory under load</h2>
+      <pre><code class="javascript">
+    CPU %      MEM USAGE / LIMIT     MEM %     NET I/O
+    98.05%     6.128 MB / 2.1 GB     0.29%     9.751 MB / 8.774 MB
+      </pre></code>
     </section>
   </section>
 </template>
