@@ -13,19 +13,18 @@
       <pre><code class="go">
         import "encoding/json"
 
+        type Geo struct {
+          Lat float64 `json:"lat"`
+          Lon float64 `json:"lon"`
+        }
         type User struct {
           ID       int    `json:"id"`
           FullName string `json:"full_name"`
-          Location Geo    `json:"location,omitempty"`
           Password string `json:"-"`
+          Location *Geo    `json:"location,omitempty"`
         }
 
-        u := User{
-          ID: 123,
-          FullName: "Party Parrot",
-          Password: "woot woot",
-        }
-
+        u := User{123, "Party Parrot", "woot woot", nil}
         output, err := json.Marshal(u)
         if err != nil {
           // Handle the error and exit
@@ -33,6 +32,38 @@
         fmt.Println(string(output))
         // {"id":123,"full_name":"Party Parrot"}
       </code></pre>
+    </section>
+
+    <section>
+      <pre><code class="go">
+        package main
+
+        import (
+          "fmt"
+          "io/ioutil"
+          "net/http"
+        )
+
+        func echoHandler(w http.ResponseWriter, r *http.Request) {
+          body, err := ioutil.ReadAll(r.Body)
+          defer r.Body.Close()
+          if err != nil {
+            w.WriteHeader(http.StatusInternalServerError)
+            fmt.Fprint(w, "Uhoh!")
+            return
+          }
+          fmt.Fprint(w, string(body))
+        }
+
+        func main() {
+          http.HandleFunc("/", echoHandler)
+          http.ListenAndServe(":4200", nil)
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <img src="img/neo.jpg" alt="I know Golang">
     </section>
   </section>
 </template>
